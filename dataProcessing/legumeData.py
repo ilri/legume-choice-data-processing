@@ -90,7 +90,6 @@ def extractLegumeResults(legume, country, projectName, projectID):
 
 def extractAllLegumeData(project):
     legumeData = []
-    legumes = project["rawdata"]["results"]["legumes"]
 
     country =  project["rawdata"]["projectInfo"]["country"]
     projectID = project["projectID"]
