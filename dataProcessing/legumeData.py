@@ -88,8 +88,14 @@ def extractLegumeResults(legume, country, projectName, projectID):
 
 
 
-def extractAllLegumeData(legumes, country, projectName, projectID):
+def extractAllLegumeData(project):
     legumeData = []
+    legumes = project["rawdata"]["results"]["legumes"]
+
+    country =  project["rawdata"]["projectInfo"]["country"]
+    projectID = project["projectID"]
+    projectName = project["rawdata"]["projectInfo"]["projectName"]
+    legumes = project["rawdata"]["results"]["legumes"]
 
     for legume in legumes:
         legumeData.append(extractLegumeResults(legume=legume, 
@@ -98,3 +104,13 @@ def extractAllLegumeData(legumes, country, projectName, projectID):
                                                 projectID=projectID))
 
     return pd.DataFrame(legumeData)
+
+
+def legumeScoresAllProjects(projects):
+    if len(projects)==1:
+        return extractAllLegumeData(projects)
+    if len(projects)>1:
+        legumeDataDF=extractAllLegumeData(projects[0])
+        for project in projects[1:]:
+            legumeDataDF = legumeDataDF.append(extractAllLegumeData(project))
+    return legumeDataDF
