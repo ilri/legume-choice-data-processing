@@ -8,7 +8,7 @@ import shutil
 # Here a series of functions used to query the database are written, making it easier to convert them into
 # a simple tabular format.
 
-os.chdir('/home/lgorman/Desktop/legumeCHOICE/data-processing') 
+os.chdir('/home/ubuntu/legumeCHOICE/data-processing') 
 from dataProcessing import agroEcoData, contextData, legumeData, pairwiseData, participatoryMatrixData
 
 
@@ -38,11 +38,11 @@ def FormatAllData():
     homepath = os.getenv('HOME')
     os.chdir(homepath) 
 
-    private_data_path = os.path.join(homepath, "Desktop", "PrivateLegumeCHOICE")
+    private_data_path = os.path.join(homepath, "AdminLegumeCHOICE")
 
-    public_data_path = os.path.join(homepath, "Desktop", "PublicLegumeCHOICE")
-    public_data_individual_path = os.path.join(homepath, "Desktop", "PublicLegumeCHOICE", "IndividualProjects")
-    public_data_assembled_path = os.path.join(homepath, "Desktop", "PublicLegumeCHOICE", "AggregatedProjects")
+    public_data_path = os.path.join(homepath, "LegumeCHOICE")
+    public_data_individual_path = os.path.join(homepath,"LegumeCHOICE", "IndividualProjects")
+    public_data_assembled_path = os.path.join(homepath, "LegumeCHOICE", "AggregatedProjects")
 
 
     # Removing all of the previous data
