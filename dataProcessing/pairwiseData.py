@@ -7,6 +7,10 @@ def pairWiseSelectionsProjectGender(project,gender):
     projectName= project["rawdata"]["projectInfo"]["projectName"]
     projectID= project["projectID"]
     country =  project["rawdata"]["projectInfo"]["country"]
+    majorRegion=project["rawdata"]["projectInfo"]["majorRegion"]
+    minorRegion=project["rawdata"]["projectInfo"]["minorRegion"]
+    communityName=project["rawdata"]["projectInfo"]["communityName"]
+    communityType=project["rawdata"]["projectInfo"]["communityType"]
 
 
     selectionsToReturn=[]
@@ -14,6 +18,10 @@ def pairWiseSelectionsProjectGender(project,gender):
     for selection in selections:
         selectionToAppend={
             "country": country,
+            "majorRegion":majorRegion,
+            "minorRegion":minorRegion,
+            "communityName":communityName,
+            "communityType":communityType,
             "projectName": projectName,
             "projectID":projectID,
             "option1": selection["funct1"]["name"],

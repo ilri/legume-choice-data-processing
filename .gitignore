@@ -6,6 +6,12 @@ t-9f3a9a89-9067-46c8-91ff-1dffeb38b442.ipynb
 
 .env
 
+<<<<<<< HEAD
 __pycache__/
 
 dataProcessing/__pycache__/
+=======
+*.pyc
+
+__pycache__/
+>>>>>>> eeafb9fa8d4447be2dea8af621ad1b0afc7d3ba3

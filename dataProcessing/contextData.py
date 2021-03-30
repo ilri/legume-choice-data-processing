@@ -38,6 +38,10 @@ def projectContextScores(project):
     projectID =  project["projectID"]
     projectName =  project["rawdata"]["projectInfo"]["projectName"]
     country =  project["rawdata"]["projectInfo"]["country"]
+    majorRegion=project["rawdata"]["projectInfo"]["majorRegion"]
+    minorRegion=project["rawdata"]["projectInfo"]["minorRegion"]
+    communityName=project["rawdata"]["projectInfo"]["communityName"]
+    communityType=project["rawdata"]["projectInfo"]["communityType"]
 
 
     allScores = project["rawdata"]["contextScores"]["scores"]
@@ -54,8 +58,13 @@ def projectContextScores(project):
     scoresToReturn={}
     column=0
     scoresToReturn["country"] = [country for attribute in attributes]
+    scoresToReturn["majorRegion"] = [majorRegion for attribute in attributes]
+    scoresToReturn["minorRegion"] = [minorRegion for attribute in attributes]
+    scoresToReturn["communityName"] = [communityName for attribute in attributes]
+    scoresToReturn["communityType"] = [communityType for attribute in attributes]
     scoresToReturn["projectName"] = [projectName for attribute in attributes]
     scoresToReturn["projectID"] = [projectID for attribute in attributes]
+    scoresToReturn["attributes"]=[attribute["name"] for attribute in attributes]
     for typology in typologies:
         for participant in participants:
             scoresToReturn[allColumns[column]]=ScoresForAllAttributes(scores=allScores, 

@@ -14,9 +14,13 @@ def ExtractProjectAgroEcoData(project):
     projectID =  project["projectID"]
     projectName =  project["rawdata"]["projectInfo"]["projectName"]
     country =  project["rawdata"]["projectInfo"]["country"]
+    majorRegion=project["rawdata"]["projectInfo"]["majorRegion"]
+    minorRegion=project["rawdata"]["projectInfo"]["minorRegion"]
+    communityName=project["rawdata"]["projectInfo"]["communityName"]
+    communityType=project["rawdata"]["projectInfo"]["communityType"]
     agroEcoData = project["rawdata"]["agroEcoData"]["biofilters"]
 
-    row={"country":country,"projectName":projectName,"projectID":projectID,}
+    row={"country":country,"majorRegion":majorRegion,"minorRegion":minorRegion,"communityName":communityName,"communityType":communityType,"projectName":projectName,"projectID":projectID}
 
 
     for index in range(0,len(agroEcoData)):
