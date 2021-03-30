@@ -3,7 +3,7 @@
 import pandas as pd
 
 
-def extractLegumeResults(legume, country, projectName, projectID):
+def extractLegumeResults(legume, country,majorRegion,minorRegion,communityName, communityType, projectName, projectID):
     contextVariables = ["land",
             "labour",
             "seed",
@@ -42,6 +42,10 @@ def extractLegumeResults(legume, country, projectName, projectID):
             "soilpH"]
 
     legumeData = {
+        "country":country, 
+        "majorRegion":majorRegion, 
+        "minorRegion":minorRegion, 
+        "communityType":communityType, 
         "country":country, 
         "projectName": projectName, 
         "projectID":projectID,
@@ -92,13 +96,21 @@ def extractAllLegumeData(project):
     legumeData = []
 
     country =  project["rawdata"]["projectInfo"]["country"]
+    majorRegion=project["rawdata"]["projectInfo"]["majorRegion"]
+    minorRegion=project["rawdata"]["projectInfo"]["minorRegion"]
+    communityName=project["rawdata"]["projectInfo"]["communityName"]
+    communityType=project["rawdata"]["projectInfo"]["communityType"]
     projectID = project["projectID"]
     projectName = project["rawdata"]["projectInfo"]["projectName"]
     legumes = project["rawdata"]["results"]["legumes"]
 
     for legume in legumes:
         legumeData.append(extractLegumeResults(legume=legume, 
-                                                country=country, 
+                                                country=country,
+                                                majorRegion=majorRegion,
+                                                minorRegion=minorRegion,
+                                                communityName=communityName,
+                                                communityType=communityType,
                                                 projectName=projectName, 
                                                 projectID=projectID))
 

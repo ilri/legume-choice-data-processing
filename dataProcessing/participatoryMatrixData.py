@@ -6,6 +6,10 @@ import pandas as pd
 def participatoryMatrixScoresProject(project):
     #project=allProjects[0]
     country =  project["rawdata"]["projectInfo"]["country"]
+    majorRegion=project["rawdata"]["projectInfo"]["majorRegion"]
+    minorRegion=project["rawdata"]["projectInfo"]["minorRegion"]
+    communityName=project["rawdata"]["projectInfo"]["communityName"]
+    communityType=project["rawdata"]["projectInfo"]["communityType"]
     projectID = project["projectID"]
     projectName = project["rawdata"]["projectInfo"]["projectName"]
     farmers = project["rawdata"]["participatoryMatrixScores"]["farmers"]
@@ -13,6 +17,10 @@ def participatoryMatrixScoresProject(project):
     for farmer in farmers:
         newFarmer={}
         newFarmer["country"]=country
+        newFarmer["majorRegion"]=majorRegion
+        newFarmer["minorRegion"]=minorRegion
+        newFarmer["communityName"]=communityName
+        newFarmer["communityType"]=communityType
         newFarmer["projectID"]=projectID
         newFarmer["projectName"]=projectName
         newFarmer["gender"]=farmer["gender"]
