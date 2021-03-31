@@ -9,8 +9,8 @@ from datetime import datetime
 # Here a series of functions used to query the database are written, making it easier to convert them into
 # a simple tabular format.
 
-#os.chdir('/home/ubuntu/legumeCHOICE/data-processing') 
-os.chdir("/home/lgorman/Desktop/legumeCHOICE/data-processing")
+os.chdir('/home/ubuntu/legumeCHOICE/data-processing') 
+#os.chdir("/home/lgorman/Desktop/legumeCHOICE/data-processing")
 
 
 #--------------------------------------------------------------
