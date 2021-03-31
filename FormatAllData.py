@@ -49,6 +49,9 @@ def FormatAllData():
     public_data_individual_path = os.path.join(homepath,"LegumeCHOICE", "IndividualProjects")
     public_data_assembled_path = os.path.join(homepath, "LegumeCHOICE", "AggregatedProjects")
 
+    test_data_path = os.path.join(homepath, "LegumeCHOICE","TestProjects")
+    test_data_individual_path = os.path.join(homepath,"LegumeCHOICE","TestProjects", "IndividualProjects")
+
     public_data_by_country = os.path.join(homepath, "LegumeCHOICE", "ByCountry")
     private_data_by_country = os.path.join(homepath, "AdminLegumeCHOICE", "ByCountry")
 
@@ -63,9 +66,6 @@ def FormatAllData():
     if os.path.exists(public_data_path) is True:
         shutil.rmtree(public_data_path)
         #os.mkdir(public_data_individual_path)
-
-
-
 
     # Creating all empty directories
     # Private data
@@ -95,7 +95,18 @@ def FormatAllData():
 
     if not os.path.exists(private_data_by_country):
         os.mkdir(private_data_by_country)
+
+    # Test Projects paths
+
+    if not os.path.exists(test_data_path):
+        os.mkdir(test_data_path)
+    if not os.path.exists(test_data_individual_path):
+        os.mkdir(test_data_individual_path)
+
+
+
     
+
 
         
     #--------------------------------------------------------------
@@ -105,19 +116,27 @@ def FormatAllData():
     #--------------------------------------------------------------
 
     # Create an empty project directory for each individual project
-# Each folder name will be the same as the projectID
+    # Each folder name will be the same as the projectID
     for project in allProjects:
         date=project["rawdata"]["projectSecret"]["dateAvailable"]
         date =date[0:19]
         date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
 
-        if(datetime.now()>date):
-            public_path_new = os.path.join(public_data_individual_path, project["projectID"])
+        if(datetime.now()>date and project["rawdata"]["projectSecret"]["realOrTestProject"]=="Genuine"):
+
+            public_path_new = os.path.join(public_data_individual_path, project["rawdata"]["projectInfo"]["projectName"])
             os.mkdir(public_path_new)
 
-            private_path_new = os.path.join(private_project_path, project["projectID"])
+            private_path_new = os.path.join(private_project_path, project["rawdata"]["projectInfo"]["projectName"])
             os.mkdir(private_path_new)
+        
+        # Making a folder for test projects
+        if(datetime.now()>date and project["rawdata"]["projectSecret"]["realOrTestProject"]=="Test"):
 
+            public_path_new = os.path.join(test_data_individual_path, project["rawdata"]["projectInfo"]["projectName"])
+            os.mkdir(public_path_new)
+
+    
     
 #--------------------------------------------------------------
 #--------------------------------------------------------------
@@ -132,9 +151,9 @@ def FormatAllData():
         date =date[0:19]
         date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
 
-        if(datetime.now()>date):
+        if(datetime.now()>date and project["rawdata"]["projectSecret"]["realOrTestProject"]=="Genuine"):
 
-            publicfolder = os.path.join(public_data_individual_path, project["projectID"])
+            publicfolder = os.path.join(public_data_individual_path, project["rawdata"]["projectInfo"]["projectName"])
             # AgroEco information is only one row, so have to transform
             agroEcoSingleProj = pd.DataFrame(columns=list(agroEcoData.ExtractProjectAgroEcoData(project).keys()))
             agroEcoSingleProj.loc[0]=agroEcoData.ExtractProjectAgroEcoData(project).values()
@@ -153,7 +172,7 @@ def FormatAllData():
             participatoryMatrixSingleProj.to_csv(os.path.join(publicfolder,"ParticipatoryMatrixScores.csv"), index=False)
             legumeDataSingleProj.to_csv(os.path.join(publicfolder,"LegumeResults.csv"), index=False)
 
-            privatefolder=os.path.join(private_project_path, project["projectID"])
+            privatefolder=os.path.join(private_project_path, project["rawdata"]["projectInfo"]["projectName"])
             privatefile =  os.path.join(privatefolder, "rawdata.json")
             with open(privatefile, "w") as outfile:
                 JSONData = {
@@ -164,7 +183,26 @@ def FormatAllData():
             projectDetails.to_csv(os.path.join(privatefolder,"projectInformation.csv"), index=False)
 
 
+        if(datetime.now()>date and project["rawdata"]["projectSecret"]["realOrTestProject"]=="Test"):
 
+            testfolder = os.path.join(test_data_individual_path, project["rawdata"]["projectInfo"]["projectName"])
+            # AgroEco information is only one row, so have to transform
+            agroEcoSingleProj = pd.DataFrame(columns=list(agroEcoData.ExtractProjectAgroEcoData(project).keys()))
+            agroEcoSingleProj.loc[0]=agroEcoData.ExtractProjectAgroEcoData(project).values()
+
+
+            contextSingleProj = pd.DataFrame(contextData.projectContextScores(project=project))
+            pairwiseSelectionsSingleProj = pairwiseData.pairWiseSelectionsProject(project=project)
+            pairwideSummarySingleProj = pairwiseData.pairWiseSummaryScores(project=project)
+            participatoryMatrixSingleProj = participatoryMatrixData.participatoryMatrixScoresProject(project=project)
+            legumeDataSingleProj = legumeData.extractAllLegumeData(project=project)
+
+            agroEcoSingleProj.to_csv(os.path.join(testfolder,"agroEcoData.csv"), index=False)
+            contextSingleProj.to_csv(os.path.join(testfolder,"ContextData.csv"), index=False)
+            pairwiseSelectionsSingleProj.to_csv(os.path.join(testfolder,"PairwiseSelections.csv"), index=False)
+            pairwideSummarySingleProj.to_csv(os.path.join(testfolder,"PairwiseSummaryScores.csv"), index=False)
+            participatoryMatrixSingleProj.to_csv(os.path.join(testfolder,"ParticipatoryMatrixScores.csv"), index=False)
+            legumeDataSingleProj.to_csv(os.path.join(testfolder,"LegumeResults.csv"), index=False)
 
     #--------------------------------------------------------------
     #--------------------------------------------------------------
