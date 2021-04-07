@@ -175,9 +175,8 @@ def FormatAllData():
             privatefolder=os.path.join(private_project_path, project["rawdata"]["projectInfo"]["projectName"])
             privatefile =  os.path.join(privatefolder, "rawdata.json")
             with open(privatefile, "w") as outfile:
-                JSONData = {
-                    "currentProject":project["rawdata"]
-                }
+                JSONData = project["rawdata"]
+                
                 json.dump(JSONData,outfile, indent=4)
             projectDetails = projectProcessing.getProjectDetails(project)
             projectDetails.to_csv(os.path.join(privatefolder,"projectInformation.csv"), index=False)
